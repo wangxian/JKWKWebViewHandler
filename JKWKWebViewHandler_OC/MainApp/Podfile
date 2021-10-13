@@ -1,6 +1,6 @@
 use_frameworks!
 
-platform :ios, '8.3'
+platform :ios, '9.0'
 
 target 'JKWKWebViewHandler_Example' do
   pod 'JKWKWebViewHandler', :path => '../../'
