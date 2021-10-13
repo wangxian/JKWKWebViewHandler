@@ -25,7 +25,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    // ios11 以后失效了
+    // self.automaticallyAdjustsScrollViewInsets = NO;
     [self configureWKWebview];
     
     
@@ -172,8 +174,12 @@
     NSString *hostname = navigationAction.request.URL.host.lowercaseString;
     if (navigationAction.navigationType == WKNavigationTypeLinkActivated
         && ![hostname containsString:@".lanou.com"]) {
-        // 对于跨域，需要手动跳转
-        [[UIApplication sharedApplication] openURL:navigationAction.request.URL];
+        // 对于跨域，需要手动跳转，iOS10过期了
+        // [[UIApplication sharedApplication] openURL:navigationAction.request.URL];
+        
+        // UIApplicationOpenURLOptionUniversalLinksOnly:如果这个要打开的URL有效，并且在应用中配置它布尔值为true（YES）时才可以打开，否则打不开。
+        NSDictionary *options = @{UIApplicationOpenURLOptionUniversalLinksOnly : @YES};
+        [[UIApplication sharedApplication] openURL:navigationAction.request.URL options:options completionHandler:nil];
         
         // 不允许web内跳转
         decisionHandler(WKNavigationActionPolicyCancel);
