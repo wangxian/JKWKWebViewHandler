@@ -43,7 +43,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    //[self.eventHandler evaluateJavaScript:@"alert('AAA')" completed:nil];
+    // [self.eventHandler evaluateJavaScript:@"alert('AAA')" completed:nil];
 }
 
 
@@ -65,10 +65,6 @@
     // web内容处理池
     config.processPool = [[WKProcessPool alloc] init];
     
-    
-    
-    
-    
     WKUserScript *usrScript = [[WKUserScript alloc] initWithSource:[JKEventHandler handlerJS] injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
     
     // 通过JS与webview内容交互
@@ -78,9 +74,6 @@
     // 注入JS对象名称AppModel，当JS通过AppModel来调用时，
     // 我们可以在WKScriptMessageHandler代理中接收到
     [config.userContentController addScriptMessageHandler:self.eventHandler  name:JKEventHandlerName];
-   
-    
-    
     
     //通过默认的构造器来创建对象
     _webView = [[WKWebView alloc] initWithFrame:self.view.bounds
@@ -108,24 +101,20 @@
                forKeyPath:@"estimatedProgress"
                   options:NSKeyValueObservingOptionNew
                   context:nil];
-
-
-
-
 }
 
 
 
 - (void)goback {
-//    if ([self.webView canGoBack]) {
-//        [self.webView goBack];
-//    }
+    //    if ([self.webView canGoBack]) {
+    //        [self.webView goBack];
+    //    }
 }
 
 - (void)gofarward {
-//    if ([self.webView canGoForward]) {
-//        [self.webView goForward];
-//    }
+    //    if ([self.webView canGoForward]) {
+    //        [self.webView goForward];
+    //    }
     JKTestVC *testVC = [JKTestVC new];
     testVC.url = @"https://www.baidu.com";
     [self.navigationController pushViewController:testVC animated:YES];
@@ -270,8 +259,8 @@ initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completi
                                                             preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:
                       UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                          completionHandler();
-                      }]];
+        completionHandler();
+    }]];
     
     [self presentViewController:alert animated:YES completion:NULL];
     NSLog(@"%@", message);
@@ -286,17 +275,15 @@ runJavaScriptConfirmPanelWithMessage:(NSString *)message
 initiatedByFrame:(WKFrameInfo *)frame
 completionHandler:(void (^)(BOOL result))completionHandler {
     NSLog(@"101===%s", __FUNCTION__);
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:
-                                @"confirm" message:@"JS调用confirm"
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"确定"
-                                              style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){
-                                                  completionHandler(YES);
-                                              }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"取消"
-                                              style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                                                  completionHandler(NO);
-                                              }]];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle: @"确认" message:@"JS调用confirm" preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action){
+        completionHandler(YES);
+    }]];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler(NO);
+    }]];
+    
     [self presentViewController:alert animated:YES completion:NULL];
     NSLog(@"%@", message);
 }
@@ -312,32 +299,24 @@ initiatedByFrame:(WKFrameInfo *)frame
 completionHandler:(void (^)(NSString * __nullable result))completionHandler {
     NSLog(@"102===%s", __FUNCTION__);
     NSLog(@"%@", prompt);
-   
-        
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:
-                                    prompt message:defaultText
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-        [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.textColor = [UIColor redColor];
-        }];
-        [alert addAction:[UIAlertAction actionWithTitle:@"确定"
-                                                  style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                                                      completionHandler([[alert.textFields lastObject] text]);
-                                                  }]];
-        
-        [self presentViewController:alert animated:YES completion:NULL];
-        
     
     
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle: prompt message:defaultText preferredStyle:UIAlertControllerStyleAlert];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.textColor = [UIColor redColor];
+    }];
     
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        completionHandler([[alert.textFields lastObject] text]);
+    }]];
+    
+    [self presentViewController:alert animated:YES completion:NULL];
 }
 
 
 
-- (void)dealloc{
-    
+- (void)dealloc {
     [JKEventHandler cleanHandler:self.eventHandler];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -346,14 +325,14 @@ completionHandler:(void (^)(NSString * __nullable result))completionHandler {
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 //synCallNativeFunction:function(nativeMethodName,callBackID){
 //    var result=null;
