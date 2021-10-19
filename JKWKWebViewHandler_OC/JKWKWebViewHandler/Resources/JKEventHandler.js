@@ -9,7 +9,6 @@ var JKEventHandler = {
             if (!JKBridgeEvent._listeners[successCallBackID]) {
                 JKBridgeEvent.addEvent(successCallBackID, function (data) {
                     successCallBack(data);
-                    console.log(JKBridgeEvent._listeners);
                 });
             }
         }
